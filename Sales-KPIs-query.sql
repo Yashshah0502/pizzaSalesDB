@@ -35,4 +35,18 @@ SELECT CAST(CAST(SUM(quantity) AS decimal(10,2)) / CAST(COUNT(DISTINCT order_id)
 SELECT SUM(quantity) from pizza_sales
 SELECT count(DISTINCT order_id) from pizza_sales
 
+-- For hourly trend
+
+SELECT DATEPART(HOUR,order_time) as Hour , 
+SUM(quantity) AS Pizza_Sold  
+from pizza_sales
+GROUP by DATEPART(HOUR,order_time)
+ORDER BY DATEPART(HOUR,order_time) DESC
+
 -- For the weekely trend
+
+SELECT DATEPART(ISO_WEEK, order_date) AS Order_Week,  
+COUNT(distinct order_id) AS Number_order
+from pizza_sales
+GROUP BY DATEPART(ISO_WEEK, order_date)
+ORDER BY DATEPART(ISO_WEEK, order_date)
